@@ -1,2 +1,2 @@
 # web-fend-advanced
-Experiments, snippets, labs with front-end.
+Exercises, snippets, labs with front-end.
