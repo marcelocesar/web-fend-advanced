@@ -192,3 +192,57 @@ simplesmente especificando o nome da propriedade e atribuindo (ou reatribuindo) 
 propriedades e métodos de um objeto podem ser excluídos também com o operador delete, que modifica o objeto diretamente.
 */
 
+
+
+/**
+ * Funções x métodos
+ */
+
+function sayHello() {
+    console.log('Olá!');
+}
+
+const dev = {
+    name: 'Marcelo'
+};
+
+const developer = {
+    name: 'Marcelo',
+    sayHello: () => console.log('Olá mundo!'), // arrow function es6
+    favoriteLanguage: (language) => {
+        console.log(`Minha linguagem favorita é ${language}`);
+    }
+};
+
+// Chamada de métodos e passando argumentos
+console.log(developer.sayHello());
+console.log(developer['favoriteLanguage']('JavaScript'));
+
+
+// Invocando uma função num array
+const myArray = [ function alerter() { console.log('Função do array!!!'); } ];
+
+myArray[0]();
+
+//Um método pode acessar o objeto em que foi chamado, usando o lexical this
+
+const geometric = {
+    tipo: 'quadrado',
+    get: function() {
+        console.log(`Minha figura geométrica é ${this.tipo}`) //lexical 'this' não funciona com arrow function
+    }
+}
+
+console.log(geometric.get());
+
+/*
+Resumo
+Um método é uma propriedade de função de um objeto. Ele é acessado da mesma forma que as demais propriedades 
+do objeto (ou seja, usando notação de ponto ou de colchetes) e é invocado exatamente como uma função comum 
+externa aos objetos (ou seja, adicionando parêntesis ao fim da expressão).
+
+Como um objeto é um conjunto de dados e de formas de operar esses dados, um método pode acessar o objeto 
+em que foi chamado usando a palavra-chave especial this. O valor de this é determinado quando um método 
+é invocado, e seu valor é o objeto em que o método foi chamado. Como this é uma palavra reservada em 
+JavaScript, seu valor não pode ser usado como um identificador.
+*/
