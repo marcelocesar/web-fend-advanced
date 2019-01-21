@@ -387,3 +387,36 @@ O objeto window é fornecido pelo navegador e não faz parte da linguagem nem da
 
 Independentemente de você trabalhar com o objeto window ou com outro criado por você, lembre-se de que os objetos são compostos de pares de chave/valor.
 */
+
+
+
+/**
+ * Extraindo propriedades e valores
+ */
+
+
+const myHabilidades = new Object();
+
+// O objeto 'Objeto()' contém dois métodos: Object.keys() e Object.values().
+
+const frontEnd = {
+    html: 'HTML 5',
+    css: 'CSS 3',
+    js: 'ES6',
+    preProcessadoresCSS: 'sass'
+}
+
+Object.keys(frontEnd); // retorna as chaves do objeto
+
+// ["html", "css", "js", "preProcessadoresCSS"]
+
+Object.values(frontEnd); //retorna os valores do das chaves do objetos
+
+// ["HTML 5", "CSS 3", "ES6", "sass"]
+
+
+/*
+Resumo
+A função construtora Object() tem acesso a diversos métodos para auxiliar no desenvolvimento. Resumindo:
+
+object.keys() retorna uma matriz das chaves (nome das propriedades) de determinado objeto. Object.values() retorna uma matriz dos valores (valor das propriedades) de determinado objeto. */
