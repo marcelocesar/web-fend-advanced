@@ -268,10 +268,10 @@ const chameleon = {
 console.log(chameleon.lookAround());
 
 // (o que a expressão acima gera?)
-function whoThis () {
+function whoThis() {
     this.trickyish = true
-  }
-  
+}
+
 console.log(whoThis())
 
 /* 
@@ -286,4 +286,104 @@ Quando não existe ponto à esquerda e uma função comum é invocada, o valor d
 
 window.whoThis();
 
+O objeto window
+Se você não ainda não trabalhou com o objeto window, ele é fornecido pelo ambiente do navegador 
+e pode ser acessado globalmente pelo seu código JavaScript usando o identificador window. 
+Esse objeto não é parte da especificação JavaScript (ou seja, ECMAScript), na verdade, foi desenvolvida pela W3C.
+
+Esse objeto window tem acesso a inúmeras informações sobre a página, incluindo:
+
+O URL da página (window.location;) A posição vertical de rolagem da página (window.scrollY') 
+Rolagem para um novo local (window.scroll(0, window.scrollY + 200); rolando 200 pixels para 
+baixo em relação ao local atual) Abertura de uma nova página da web (window.open("https://www.udacity.com/");)
+
+*/
+
+// Variáveis globais são propriedades de window
+
+var meuNome = 'Marcelo';
+
+console.log(window.meuNome === meuNome); //true
+
+
+/* Globais e var, let e const
+As palavras-chave var, let e const são usadas para declarar variáveis em JavaScript. var existe desde o 
+início da linguagem, e let e const são adições bem mais novas (adicionadas na ES6).
+Apenas declarar variáveis com a palavra-chave var as adiciona ao objeto window. Se você declarar uma 
+variável fora de uma função com let ou const, ela não será adicionada ao objeto window como uma propriedade.
+*/
+
+let currentlyEating = 'ice cream';
+
+console.log(window.currentlyEating === currentlyEating); // false!
+
+
+// Funções e métodos globais em window
+
+function learnSomethingNew() {
+    window.open('https://www.udacity.com/');
+}
+
+window.learnSomethingNew === learnSomethingNew;
+
+
+/**
+ * Evite globais
+ */
+
+/*
+Alto acoplamento
+Alto acoplamento é uma frase que os desenvolvedores usam para identificar códigos que 
+são muito dependentes dos detalhes uns dos outros. A palavra acoplamento significa união de dois itens. 
+No alto acoplamento, códigos são unidos de forma que alterar um acidentalmente altera o funcionamento de outro:
+*/
+
+var instructor = 'Richard';
+
+function richardSaysHi() {
+    console.log(`${instructor} says 'hi!''`);
+}
+
+
+
+/*
+Colisões de nome
+Uma colisão de nome ocorre quando duas (ou mais) funções dependem de uma variável com o mesmo nome. 
+Um grande problema disso é que ambas as funções vão tentar atualizar ou definir a variável, mas essas mudanças 
+se neutralizam entre si. Vamos ver um exemplo de colisão de nome com o código de manipulação do DOM abaixo:
+*/
+
+let counter = 1;
+
+function addDivToHeader () {
+  const newDiv = document.createElement('div');
+  newDiv.textContent = 'div number ' + counter;
+
+  counter = counter + 1;
+
+  const headerSection = document.querySelector('header');
+  headerSection.appendChild(newDiv)
+}
+
+function addDivToFooter() {
+  const newDiv = document.createElement('div');
+  newDiv.textContent = 'div number ' + counter;
+
+  counter = counter + 1;
+
+  const headerSection = document.querySelector('footer');
+  headerSection.appendChild(newDiv)
+}
+
+/*
+Ambas funcões criam um elemento <div> e aumentam a variável counter. Isso causa vários problemas porque as duas funções
+utilizam a mesma variável.
+*/
+
+
+/*
+Resumo
+O objeto window é fornecido pelo navegador e não faz parte da linguagem nem da especificação JavaScript. Toda declaração de variável global (ou seja, as que usam var) ou de função global são adicionadas como propriedades a esse objeto window. O uso excessivo de variáveis globais não é uma boa prática e pode causar problemas inesperados a um código perfeitamente escrito.
+
+Independentemente de você trabalhar com o objeto window ou com outro criado por você, lembre-se de que os objetos são compostos de pares de chave/valor.
 */
