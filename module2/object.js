@@ -220,7 +220,9 @@ console.log(developer['favoriteLanguage']('JavaScript'));
 
 
 // Invocando uma função num array
-const myArray = [ function alerter() { console.log('Função do array!!!'); } ];
+const myArray = [function alerter() {
+    console.log('Função do array!!!');
+}];
 
 myArray[0]();
 
@@ -228,7 +230,7 @@ myArray[0]();
 
 const geometric = {
     tipo: 'quadrado',
-    get: function() {
+    get: function () {
         console.log(`Minha figura geométrica é ${this.tipo}`) //lexical 'this' não funciona com arrow function
     },
     get2() {
@@ -249,4 +251,39 @@ Como um objeto é um conjunto de dados e de formas de operar esses dados, um mé
 em que foi chamado usando a palavra-chave especial this. O valor de this é determinado quando um método 
 é invocado, e seu valor é o objeto em que o método foi chamado. Como this é uma palavra reservada em 
 JavaScript, seu valor não pode ser usado como um identificador.
+*/
+
+
+/**
+ *  Atenção com os globais
+ */
+
+const chameleon = {
+    eyes: 2,
+    lookAround() {
+        console.log(`Vejo você com os meus ${this.eyes} olhos!`); //o valor de this é o próprio objeto chameleon
+    }
+};
+
+console.log(chameleon.lookAround());
+
+// (o que a expressão acima gera?)
+function whoThis () {
+    this.trickyish = true
+  }
+  
+console.log(whoThis())
+
+/* 
+this e invocação
+Como a função é invocada determina o valor de this dentro da função. 
+
+Como .lookAround() é invocado como método, o valor de this dentro de .lookAround() é tudo que está à esquerda do ponto na invocação.
+
+O objeto chameleon está à esquerda do ponto. Portanto, dentro do método .lookAround(), this vai referenciar o objeto chameleon.
+
+Quando não existe ponto à esquerda e uma função comum é invocada, o valor de this é o objeto global window.
+
+window.whoThis();
+
 */
