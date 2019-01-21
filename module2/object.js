@@ -230,10 +230,14 @@ const geometric = {
     tipo: 'quadrado',
     get: function() {
         console.log(`Minha figura geométrica é ${this.tipo}`) //lexical 'this' não funciona com arrow function
+    },
+    get2() {
+        console.log(`Minha figura geométrica é ${this.tipo}`) //lexical 'this' não funciona com arrow function
     }
 }
 
 console.log(geometric.get());
+console.log(geometric.get2());
 
 /*
 Resumo
