@@ -526,3 +526,12 @@ const myFunction = (
 // Essa talvez tenha sido complicada! A chave dessa pergunta é o resultado de se usar o operador delete. O operador delete, na verdade, só tem efeito nas propriedades de um objeto. Ele não é usado para desalocar recursos diretamente (ou seja, liberar memória) e não gera efeito em variáveis e nomes de função.
 
 // Sendo assim, o número passado nessa expressão de função invocada imediatamente, 2, é retornado.
+
+
+/*
+Resumo
+IIFE cria um escopo privado que protege variáveis e métodos contra acesso.
+Executar código sem criar mais variáveis globais.
+reduzir o namespace global diminui a chance de colisões com nomes de variável duplicados.
+
+*/
