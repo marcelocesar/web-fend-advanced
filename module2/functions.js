@@ -307,7 +307,7 @@ function IceCream() {
   
   // Objetos defaults possuem se comparados a array defaults é a maneira com a qual são tratadas as opções ignoradas.
   
-  function createSundae({scoops = 1, toppings = ['Hot Fudge']} = {}) { … }
+  function createSundae({scoops = 1, toppings = ['Hot Fudge']} = {}) { }
   
   /*
   ...com a função createSundae() usando objetos defaults com destructuring, se você quiser usar o valor padrão de scoops mas modificar o parâmetro toppings, então tudo o que você precisa fazer é passar um objeto que só tenha a propriedade toppings:
@@ -317,11 +317,11 @@ function IceCream() {
   
   // agora com array
   
-  function createSundae([scoops = 1, toppings = ['Hot Fudge']] = []) { … }
+  function createSundae([scoops = 1, toppings = ['Hot Fudge']] = []) { }
   
   // Com a função escrita dessa forma, se você quiser utilizar o valor default de scoops, mas modificar a variável toppings, terá que chamar a função de uma maneira um tanto quanto... estranha:
   
-  createSundae([undefined, toppings: ['Hot Fudge', 'Sprinkles', 'Caramel']]);
+  createSundae([undefined, toppings = ['Hot Fudge', 'Sprinkles', 'Caramel']]);
   
   /*
   Como as arrays são baseadas em posição, nós precisaríamos passar undefined e "ignorar" o primeiro argumento (e aceitar o valor default), para só então chegar ao segundo argumento. A não ser que você tenha uma razão muito forte para usar array defaults com array destructuring, recomendamos que utilize objetos defaults com objetos destructuring!
