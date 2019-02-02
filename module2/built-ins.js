@@ -79,8 +79,6 @@ console.log(bowl);
 
 // Alteramos as propriedades de Bowl com Symbols, com isso, cada Symbol é unico e o primeiro objeto banana não será sobreescrito.
 
-
-
 /**
  * Iterator e Iterable
  *
@@ -174,7 +172,8 @@ const marcelo = {
 
 		let keys = Object.keys(this); // pegando as keys
 		let i = 0; // iniciando iterator ou count
-		let next = () => { // método next()
+		let next = () => {
+			// método next()
 			const key = keys[i++];
 			const value = this[key];
 			const done = i >= keys.length;
@@ -188,7 +187,6 @@ const marcelo = {
 	}
 };
 
-
 let iterator = marcelo[Symbol.iterator]();
 
 console.log('----------------'); // { next: [Function: next] }
@@ -197,8 +195,6 @@ console.log(iterator.next().value); // Marcelo
 console.log(iterator.next()); // { key: 'height', value: '1,70', done: false }
 console.log(iterator.next()); // { key: 'weight', value: 230, done: true }
 console.log(iterator.next());
-
-
 
 /**
  * Sets
@@ -214,11 +210,9 @@ No entanto,
 ex2: {1, 1, 2, 4} NÃO é um set, pois contém itens duplicados (o 1 está lá mais de uma vez!).
 */
 
-
 // Em JS podemos nos beneficiar de algo semelhante ao usar um array
 
-const nums = [2, 4, 5, 6];
-
+const nums = [ 2, 4, 5, 6 ];
 
 // Pórem, arrays não forçam os items a serem únicos.
 
@@ -226,7 +220,6 @@ nums.push(2);
 console.log(nums); // [2, 4, 5, 6, 2]
 
 // e agora nums não é mais um set no sentido matemático da palavra.
-
 
 /* Sets no ES6+
 -------------------- */
@@ -240,7 +233,6 @@ console.log(nums); // [2, 4, 5, 6, 2]
 
 */
 
-
 // Como criar um Set
 
 const games = new Set();
@@ -248,21 +240,19 @@ console.log(games); // Set {}
 
 // Passar array como parametro
 
-const videoGames = new Set(['Super Mario Bros.', 'Banjo-Kazooie', 'Mario Kart', 'Super Mario Bros.']);
+const videoGames = new Set([ 'Super Mario Bros.', 'Banjo-Kazooie', 'Mario Kart', 'Super Mario Bros.' ]);
 console.log(videoGames);
 
 // Perceba que 'Super Mario Bros.' foi passado duas vezes, mas o set só apresenta um
 
-const set1 = new Set([1, 'Super Mario Bros.', true, false, '1']);
+const set1 = new Set([ 1, 'Super Mario Bros.', true, false, '1' ]);
 console.log(set1);
-
-
 
 /* Modificadores Sets
 ------------------------ */
 // Como adicionar ou deletar item com os métodos .add() e .delete()
 
-const jogos = new Set(['God of War 4', 'Resident Evil 7', 'Call of Duty']);
+const jogos = new Set([ 'God of War 4', 'Resident Evil 7', 'Call of Duty' ]);
 
 console.log(jogos);
 
@@ -272,9 +262,7 @@ jogos.delete('Resident Evil 7');
 
 console.log(jogos);
 
-
 // DICA: se você tentar .add() (adicionar) um item duplicado a um set, não receberá um erro, mas o item não será adicionado ao set. Além disso, caso tente .delete() (remover) um item que não esteja em um set, você não receberá um erro, e o set permanecerá inalterado. Ambos os métodos retornam true se um item for adicionado ou removido com sucesso do set e false se isso não ocorrer.
-
 
 // propriedade size
 console.log(jogos.size);
@@ -286,24 +274,20 @@ console.log(jogos.has('Resident Evil 2: Remaker'));
 console.log(jogos.values());
 console.log(jogos.keys());
 
-
-
 /* Set Iterator */
 
 const iteratorJogos = jogos.values();
 
-console.log(iteratorJogos.next()); 
+console.log(iteratorJogos.next());
 console.log(iteratorJogos.next());
 console.log(iteratorJogos.next());
 console.log(iteratorJogos.next());
 
-
-// for of 
+// for of
 
 for (const jogo of jogos) {
-  console.log(jogo);
+	console.log(jogo);
 }
-
 
 // Ex1
 
@@ -319,7 +303,6 @@ for (const jogo of jogos) {
  * Then use the `.delete()` method to remove "strawberry" from the set.
  */
 
-
 const myFavoriteFlavors = new Set();
 myFavoriteFlavors.add('chocolate chip');
 myFavoriteFlavors.add('cookies and cream');
@@ -327,13 +310,11 @@ myFavoriteFlavors.add('strawberry');
 myFavoriteFlavors.add('vanilla');
 myFavoriteFlavors.delete('strawberry');
 
-
-
 /**
  * WeakSets
  */
 
- /* 
+/* 
  Um WeakSet é como um set normal, mas com algumas diferenças-chave:
 
 um WeakSet só pode conter objetos
@@ -341,14 +322,11 @@ um WeakSet não é um iterable, o que significa que não é possível iterar por
 um WeakSet não possui o método .clear()
  */
 
+let jogo1 = { nome: 'Resident Evil', genero: 'Horror', desenvolvedor: 'capcom' };
+let jogo2 = { nome: 'Tomb Raider', genero: 'Ação e aventura', desenvolvedor: 'Eidos Montréal,' };
+let jogo3 = { nome: 'God of War 4', genero: 'Ação e aventura', desenvolvedor: 'SIE Santa Monica Studio' };
 
-
-let jogo1 = { nome: 'Resident Evil', genero:'Horror', desenvolvedor: 'capcom' };
-let jogo2 = { nome: 'Tomb Raider', genero:'Ação e aventura', desenvolvedor: 'Eidos Montréal,' };
-let jogo3 = { nome: 'God of War 4', genero:'Ação e aventura', desenvolvedor: 'SIE Santa Monica Studio' };
-
-
-const meusJogos = new WeakSet([jogo1, jogo2, jogo3]);
+const meusJogos = new WeakSet([ jogo1, jogo2, jogo3 ]);
 
 console.log(meusJogos);
 
@@ -368,7 +346,6 @@ jogo2 = null;
 
 console.log(meusJogos);
 
-
 /*
  * Programming Quiz: Using Sets (3-2)
  *
@@ -381,8 +358,6 @@ console.log(meusJogos);
  * Use the `.add()` method to add the `flavor1` object (again!) to the `uniqueFlavors` set
  */
 
-
-
 const uniqueFlavors = new WeakSet();
 const flavor1 = { flavor: 'chocolate' };
 const flavor2 = { flavor: 'vanilla' };
@@ -393,4 +368,97 @@ uniqueFlavors.add(flavor1);
 
 console.log(uniqueFlavors);
 
- 
+/**
+ * Maps
+ */
+
+// Se sets e arrays possuem similaridades, então maps e objetos também são similares. pois maps armazenam pares de chave-valor de forma similar à maneira que objetos contêm propriedades com nomes e valores.
+
+const consoles = new Map();
+console.log('----------------');
+console.log(consoles);
+
+
+// set(key, value)
+
+consoles.set('playstation 4', {marca: 'Sony', capacidade: '1 TB', recursos: ['Suporta Blu-ray', 'Controlado por movimentos']});
+consoles.set('xboxone', {marca: 'Microsoft', capacidade: '1 TB', recursos: ['Suporta Blu-ray', 'Controlado por movimentos']});
+consoles.set('switch', {marca: 'Nintendo', capacidade: '1 TB', recursos: ['remote play', 'Controlado por movimentos']});
+
+console.log('----------------');
+console.log(consoles);
+
+// delete(key)
+
+consoles.delete('switch');
+
+//consoles.clear()
+console.log('----------------');
+console.log(consoles);
+
+
+/* 
+DICA: se você utilizar o método .set() para adicionar um par chave-valor a um map que já utiliza a mesma chave, você não receberá um erro, mas o par chave-valor sobrescreverá o par já existente no map. Se você tentar usar o método .delete() para excluir um par chave-valor que não está no map, também não receberá um erro e o map permanecerá inalterado.
+*/
+
+// has()
+console.log('----------------');
+console.log(consoles.has('switch'));
+
+// get()
+console.log('----------------');
+console.log(consoles.get('switch'));
+
+
+
+/* Maps iterators
+------------------*/
+
+/* 
+Existem 3 formas:
+
+- Acesse cada chave ou valor usando o iterator padrão do map
+- Itere por cada par chave-valor utilizando o novo loop for...of
+- Itere por cada par chave-valor utilizando o método .forEach() do map
+*/
+
+
+// iterator (com keys() ou values())
+
+let iteratosConsoles = consoles.keys();
+
+console.log('----------------');
+console.log(iteratosConsoles.next());
+console.log(iteratosConsoles.next());
+console.log(iteratosConsoles.next());
+
+
+// for of
+console.log('----------------');
+for (const con of consoles) {
+  console.log(con);
+}
+
+
+/*
+ * Using array destructuring, fix the following code to print the keys and values of the `members` Map to the console.
+ */
+
+const members = new Map();
+
+members.set('Evelyn', 75.68);
+members.set('Liam', 20.16);
+members.set('Sophia', 0);
+members.set('Marcus', 10.25);
+
+console.log('----------------');
+for (const member of members) {
+
+  // array destructuring
+  console.log([key, value] = member);
+}
+
+
+// .foreach
+console.log('----------------');
+members.forEach((value, key) => console.log(value, key));
