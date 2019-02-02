@@ -378,12 +378,23 @@ const consoles = new Map();
 console.log('----------------');
 console.log(consoles);
 
-
 // set(key, value)
 
-consoles.set('playstation 4', {marca: 'Sony', capacidade: '1 TB', recursos: ['Suporta Blu-ray', 'Controlado por movimentos']});
-consoles.set('xboxone', {marca: 'Microsoft', capacidade: '1 TB', recursos: ['Suporta Blu-ray', 'Controlado por movimentos']});
-consoles.set('switch', {marca: 'Nintendo', capacidade: '1 TB', recursos: ['remote play', 'Controlado por movimentos']});
+consoles.set('playstation 4', {
+	marca: 'Sony',
+	capacidade: '1 TB',
+	recursos: [ 'Suporta Blu-ray', 'Controlado por movimentos' ]
+});
+consoles.set('xboxone', {
+	marca: 'Microsoft',
+	capacidade: '1 TB',
+	recursos: [ 'Suporta Blu-ray', 'Controlado por movimentos' ]
+});
+consoles.set('switch', {
+	marca: 'Nintendo',
+	capacidade: '1 TB',
+	recursos: [ 'remote play', 'Controlado por movimentos' ]
+});
 
 console.log('----------------');
 console.log(consoles);
@@ -395,7 +406,6 @@ consoles.delete('switch');
 //consoles.clear()
 console.log('----------------');
 console.log(consoles);
-
 
 /* 
 DICA: se você utilizar o método .set() para adicionar um par chave-valor a um map que já utiliza a mesma chave, você não receberá um erro, mas o par chave-valor sobrescreverá o par já existente no map. Se você tentar usar o método .delete() para excluir um par chave-valor que não está no map, também não receberá um erro e o map permanecerá inalterado.
@@ -409,8 +419,6 @@ console.log(consoles.has('switch'));
 console.log('----------------');
 console.log(consoles.get('switch'));
 
-
-
 /* Maps iterators
 ------------------*/
 
@@ -422,7 +430,6 @@ Existem 3 formas:
 - Itere por cada par chave-valor utilizando o método .forEach() do map
 */
 
-
 // iterator (com keys() ou values())
 
 let iteratosConsoles = consoles.keys();
@@ -432,13 +439,11 @@ console.log(iteratosConsoles.next());
 console.log(iteratosConsoles.next());
 console.log(iteratosConsoles.next());
 
-
 // for of
 console.log('----------------');
 for (const con of consoles) {
-  console.log(con);
+	console.log(con);
 }
-
 
 /*
  * Using array destructuring, fix the following code to print the keys and values of the `members` Map to the console.
@@ -453,16 +458,13 @@ members.set('Marcus', 10.25);
 
 console.log('----------------');
 for (const member of members) {
-
-  // array destructuring
-  console.log([key, value] = member);
+	// array destructuring
+	console.log(([ key, value ] = member));
 }
-
 
 // .foreach
 console.log('----------------');
 members.forEach((value, key) => console.log(value, key));
-
 
 console.log('--------------------------------');
 
@@ -470,7 +472,7 @@ console.log('--------------------------------');
  * WeakMaps
  */
 
- /* 
+/* 
  Um WeakMap como um map normal, com algumas pequenas diferenças:
 
  - um WeakMap só pode conter objetos como chaves,
@@ -491,14 +493,10 @@ console.log(library);
 
 // library.set('The Grapes of Wrath', false); // Lançará um erro: Invalid value used as weak map key
 
-
 // Garbage collection: Quando o garbage collector do JavaScript rodar, a memória ocupada por esse objeto anteriormente será liberada para ser usada posteriormente em seu programa.
-
 
 //book1 = null;
 console.log(library);
-
-
 
 /**
  * Proxies
@@ -510,57 +508,52 @@ o objeto do qual ele será o proxy
 um objeto contendo uma lista de métodos que serão utilizados para tratar o acesso aos dados do primeiro objeto.
 O segundo objeto é chamado de handler. */
 
-
-const richard = {status: 'looking for work'};
+const richard = { status: 'looking for work' };
 const agent = new Proxy(richard, {});
 
 console.log(agent.status);
 
-
 // get() é utilizada para "interceptar" chamadas a propriedades:
 
-const richard1 = {status: 'looking for work'};
+const richard1 = { status: 'looking for work' };
 const handler1 = {
-    get(target, propName) {
-        console.log(target); // the `richard` object, not `handler` and not `agent`
-        console.log(propName); // the name of the property the proxy (`agent` in this case) is checking
-    }
+	get(target, propName) {
+		console.log(target); // the `richard` object, not `handler` and not `agent`
+		console.log(propName); // the name of the property the proxy (`agent` in this case) is checking
+	}
 };
 const agent1 = new Proxy(richard1, handler1);
 console.log(agent1.status); // logs out the richard object (not the agent object!) and the name of the property being accessed (`status`)
 
 // Acessando o objeto-alvo de dentro do proxy
 
-const richard2 = {status: 'looking for work'};
+const richard2 = { status: 'looking for work' };
 const handler2 = {
-    get(target, propName) {
-        console.log(target);
-        console.log(propName);
-        return target[propName];
-    }
+	get(target, propName) {
+		console.log(target);
+		console.log(propName);
+		return target[propName];
+	}
 };
 const agent2 = new Proxy(richard2, handler2);
-console.log(agent2.status) // (1)logs the richard object, (2)logs the property being accessed, (3)returns the text in richard.status
-
+console.log(agent2.status); // (1)logs the richard object, (2)logs the property being accessed, (3)returns the text in richard.status
 
 // Obtendo a informação de return do proxy diretamente
 
-const richard3 = {status: 'looking for work'};
+const richard3 = { status: 'looking for work' };
 const handler3 = {
-    get(target, propName) {
-        return `He's following many leads, so you should offer a contract as soon as possible!`;
-    }
+	get(target, propName) {
+		return `He's following many leads, so you should offer a contract as soon as possible!`;
+	}
 };
 const agent3 = new Proxy(richard3, handler3);
-console.log(agent3.status) // returns the text `He's following many leads, so you should offer a contract as soon as possible!`
-
+console.log(agent3.status); // returns the text `He's following many leads, so you should offer a contract as soon as possible!`
 
 /* 
 Com esse código, o proxy nem checará o objeto-alvo, ele apenas interceptará a chamada da propriedade, respondendo diretamente à mensagem de retorno.
 
 Dessa forma, a armadilha get assume o controle sempre que uma propriedade é acessada no proxy. Se quisermos interceptar chamadas para modificar propriedades, então a armadilha set deverá ser utilizada.
 */
-
 
 /* set() - é utilizada para interceptar o código que modificará uma propriedade. Ela recebe:
 
@@ -569,20 +562,19 @@ Dessa forma, a armadilha get assume o controle sempre que uma propriedade é ace
 - o novo valor para o proxy
 -------------------------- */
 
-
-const richard4 = {status: 'looking for work'};
+const richard4 = { status: 'looking for work' };
 const handler4 = {
-    set(target, propName, value) {
-        if (propName === 'payRate') { // if the pay is being set, take 15% as commission
-            value = value * 0.85;
-        }
-        target[propName] = value;
-    }
+	set(target, propName, value) {
+		if (propName === 'payRate') {
+			// if the pay is being set, take 15% as commission
+			value = value * 0.85;
+		}
+		target[propName] = value;
+	}
 };
 const agent4 = new Proxy(richard4, handler4);
 agent4.payRate = 1000; // set the actor's pay to $1,000
 console.log(agent4.payRate); // $850 the actor's actual pay
-
 
 /* 
 Outras armadilhas
@@ -607,16 +599,16 @@ setPrototypeOf - permite que o proxy controle chamadas ao Object.setPrototypeOf 
 ------------------------------- */
 
 var obj = {
-  _age: 5,
-  _height: 4,
-  get age() {
-      console.log(`getting the "age" property`);
-      console.log(this._age);
-  },
-  get height() {
-      console.log(`getting the "height" property`);
-      console.log(this._height);
-  }
+	_age: 5,
+	_height: 4,
+	get age() {
+		console.log(`getting the "age" property`);
+		console.log(this._age);
+	},
+	get height() {
+		console.log(`getting the "height" property`);
+		console.log(this._height);
+	}
 };
 
 /* 
@@ -635,12 +627,15 @@ obj.weight; // logs just 120
 
 // Com os proxies da ES6, nós não precisamos saber as propriedades do objeto com antecedência:
 
-const proxyObj = new Proxy({age: 5, height: 4}, {
-  get(targetObj, property) {
-      console.log(`getting the ${property} property`);
-      console.log(targetObj[property]);
-  }
-});
+const proxyObj = new Proxy(
+	{ age: 5, height: 4 },
+	{
+		get(targetObj, property) {
+			console.log(`getting the ${property} property`);
+			console.log(targetObj[property]);
+		}
+	}
+);
 
 proxyObj.age; // logs 'getting the age property' & 5
 proxyObj.height; // logs 'getting the height property' & 4
@@ -649,3 +644,152 @@ proxyObj.height; // logs 'getting the height property' & 4
 
 proxyObj.weight = 120; // set a new property on the object
 proxyObj.weight; // logs 'getting the weight property' & 120
+
+/**
+ * Generators
+ */
+
+function getEmployee() {
+	console.log('the function has started');
+
+	const names = [ 'Amanda', 'Diego', 'Farrin', 'James', 'Kagure', 'Kavita', 'Orit', 'Richard' ];
+
+	for (const name of names) {
+		console.log(name);
+	}
+
+	console.log('the function has ended');
+}
+
+getEmployee();
+
+/* 
+Sempre que uma função é invocada, o mecanismo JavaScript inicia no topo da função e executa cada linha de código até chegar à parte inferior. Não existe maneira de parar a execução da função no meio e retornar depois para o mesmo ponto onde paramos. Esse comportamento "execute-até-o-fim".
+*/
+
+// Funções pausáveis
+function* getEmployee2() {
+	console.log('the function has started');
+
+	const names = [ 'Amanda', 'Diego', 'Farrin', 'James', 'Kagure', 'Kavita', 'Orit', 'Richard' ];
+
+	for (const name of names) {
+		console.log(name);
+	}
+
+	console.log('the function has ended');
+}
+
+// Observe o asterisco**** logo após a palavra function
+
+getEmployee2();
+
+// this is the response I get in Chrome:
+//getEmployee2 {[[GeneratorStatus]]: "suspended", [[GeneratorReceiver]]: Window}
+
+// genarators em funções
+
+function* name1() {}
+function* name2() {}
+function* name3() {}
+
+/* Generators e iterators
+------------------------- */
+
+const generatorIterator = getEmployee();
+generatorIterator.next();
+
+/*
+the function has started
+Amanda
+Diego
+Farrin
+James
+Kagure
+Kavita
+Orit
+Richard
+the function has ended
+*/
+
+// A palavra-chave 'yield'
+
+function* getEmployee3() {
+	console.log('the function has started');
+
+	const names = [ 'Amanda', 'Diego', 'Farrin', 'James', 'Kagure', 'Kavita', 'Orit', 'Richard' ];
+
+	for (const name of names) {
+		console.log(name);
+		yield;
+	}
+
+	console.log('the function has ended');
+}
+
+const generatorIterator3 = getEmployee3();
+generatorIterator3.next();
+
+/* 
+the function has started
+Amanda 
+*/
+
+// Enviando dados pra dentro ou fora de um generator
+
+function* displayResponse() {
+	const response = yield;
+	console.log(`Your response is "${response}"!`);
+}
+
+const iterator = displayResponse();
+
+iterator.next(); // starts running the generator function
+iterator.next('Hello Udacity Student'); // send data into the generator
+// the line above logs to the console: Your response is "Hello Udacity Student"!
+
+function* getEmployee() {
+	const names = [ 'Amanda', 'Diego', 'Farrin', 'James', 'Kagure', 'Kavita', 'Orit', 'Richard' ];
+	const facts = [];
+
+	for (const name of names) {
+		// yield *out* each name AND store the returned data into the facts array
+		facts.push(yield name);
+	}
+
+	return facts;
+}
+
+const generatorIterator = getEmployee();
+
+// get the first name out of the generator
+let name = generatorIterator.next().value;
+
+// pass data in *and* get the next name
+name = generatorIterator.next(`${name} is cool!`).value;
+
+// pass data in *and* get the next name
+name = generatorIterator.next(`${name} is awesome!`).value;
+
+// pass data in *and* get the next name
+name = generatorIterator.next(`${name} is stupendous!`).value;
+
+// you get the idea
+name = generatorIterator.next(`${name} is rad!`).value;
+name = generatorIterator.next(`${name} is impressive!`).value;
+name = generatorIterator.next(`${name} is stunning!`).value;
+name = generatorIterator.next(`${name} is awe-inspiring!`).value;
+
+// pass the last data in, generator ends and returns the array
+const positions = generatorIterator.next(`${name} is magnificent!`).value;
+
+// displays each name with description on its own line
+positions.join('\n');
+
+/* 
+A primeira chamada de .next() passa dados. Mas os dados não são armazenados em nenhum lugar. A última chamada .next() deve ter algum dado já que está tendo o yield da última chamada de toppings.push().
+*/
+
+/*
+Generators são um novo tipo poderoso de função, que é capaz de pausar sua execução ao mesmo tempo em que mantém seu próprio estado. Os generators são ótimos para iterar por listas, tratando seus items um por um. Você também pode utilizá-los para tratar callbacks aninhados. 
+*/
