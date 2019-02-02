@@ -462,3 +462,39 @@ for (const member of members) {
 // .foreach
 console.log('----------------');
 members.forEach((value, key) => console.log(value, key));
+
+
+console.log('--------------------------------');
+
+/**
+ * WeakMaps
+ */
+
+ /* 
+ Um WeakMap como um map normal, com algumas pequenas diferenças:
+
+ - um WeakMap só pode conter objetos como chaves,
+ - um WeakMap não é um iterable, o que significa que não é possível executar um loop para varrer seu conteúdo e
+ - um WeakMap não possui um método .clear().
+ */
+
+const book1 = { title: 'Pride and Prejudice', author: 'Jane Austen' };
+const book2 = { title: 'The Catcher in the Rye', author: 'J.D. Salinger' };
+const book3 = { title: 'Gulliver’s Travels', author: 'Jonathan Swift' };
+
+const library = new WeakMap();
+library.set(book1, true);
+library.set(book2, false);
+library.set(book3, true);
+
+console.log(library);
+
+// library.set('The Grapes of Wrath', false); // Lançará um erro: Invalid value used as weak map key
+
+
+// Garbage collection: Quando o garbage collector do JavaScript rodar, a memória ocupada por esse objeto anteriormente será liberada para ser usada posteriormente em seu programa.
+
+
+book1 = null;
+console.log(library);
+
