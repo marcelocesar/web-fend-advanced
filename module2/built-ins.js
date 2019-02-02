@@ -200,3 +200,129 @@ console.log(iterator.next());
 
 
 
+/**
+ * Sets
+ */
+
+/* 
+Na matemática, um set (conjunto, na tradução literal) é uma coleção de items diferentes entre si. 
+
+ex1: {2, 4, 5, 6} é um set porque cada número é único e aparece uma só vez.
+
+No entanto,
+
+ex2: {1, 1, 2, 4} NÃO é um set, pois contém itens duplicados (o 1 está lá mais de uma vez!).
+*/
+
+
+// Em JS podemos nos beneficiar de algo semelhante ao usar um array
+
+const nums = [2, 4, 5, 6];
+
+
+// Pórem, arrays não forçam os items a serem únicos.
+
+nums.push(2);
+console.log(nums); // [2, 4, 5, 6, 2]
+
+// e agora nums não é mais um set no sentido matemático da palavra.
+
+
+/* Sets no ES6+
+-------------------- */
+
+/* 
+ Funciona de maneira similar ao array, as diferenças são:
+ - Sets não possuem índices - você não faz referência a items do set com base em suas posições no set
+ - items em um set não podem ser acessados individualmente.
+
+ Um set é um objeto que permite armazenar items únicos. Você pode adicionar items a um set, remover items de um set e iterar por um set. Esses items podem ser tanto valores primitivos como objetos complexos.
+
+*/
+
+
+// Como criar um Set
+
+const games = new Set();
+console.log(games); // Set {}
+
+// Passar array como parametro
+
+const videoGames = new Set(['Super Mario Bros.', 'Banjo-Kazooie', 'Mario Kart', 'Super Mario Bros.']);
+console.log(videoGames);
+
+// Perceba que 'Super Mario Bros.' foi passado duas vezes, mas o set só apresenta um
+
+const set1 = new Set([1, 'Super Mario Bros.', true, false, '1']);
+console.log(set1);
+
+
+
+/* Modificadores Sets
+------------------------ */
+// Como adicionar ou deletar item com os métodos .add() e .delete()
+
+const jogos = new Set(['God of War 4', 'Resident Evil 7', 'Call of Duty']);
+
+console.log(jogos);
+
+jogos.add('Resident Evil 2: Remaker');
+jogos.add('Black Ops 4');
+jogos.delete('Resident Evil 7');
+
+console.log(jogos);
+
+
+// DICA: se você tentar .add() (adicionar) um item duplicado a um set, não receberá um erro, mas o item não será adicionado ao set. Além disso, caso tente .delete() (remover) um item que não esteja em um set, você não receberá um erro, e o set permanecerá inalterado. Ambos os métodos retornam true se um item for adicionado ou removido com sucesso do set e false se isso não ocorrer.
+
+
+// propriedade size
+console.log(jogos.size);
+
+// método has()
+console.log(jogos.has('Resident Evil 2: Remaker'));
+
+// recuperando valores com values() ou keys()
+console.log(jogos.values());
+console.log(jogos.keys());
+
+
+
+/* Set Iterator */
+
+const iteratorJogos = jogos.values();
+
+console.log(iteratorJogos.next()); 
+console.log(iteratorJogos.next());
+console.log(iteratorJogos.next());
+console.log(iteratorJogos.next());
+
+
+// for of 
+
+for (const jogo of jogos) {
+  console.log(jogo);
+}
+
+
+// Ex1
+
+/*
+ * Programming Quiz: Using Sets (3-1)
+ *
+ * Create a Set object and store it in a variable named `myFavoriteFlavors`. Add the following strings to the set:
+ *     - chocolate chip
+ *     - cookies and cream
+ *     - strawberry
+ *     - vanilla
+ *
+ * Then use the `.delete()` method to remove "strawberry" from the set.
+ */
+
+
+const myFavoriteFlavors = new Set();
+myFavoriteFlavors.add('chocolate chip');
+myFavoriteFlavors.add('cookies and cream');
+myFavoriteFlavors.add('strawberry');
+myFavoriteFlavors.add('vanilla');
+myFavoriteFlavors.delete('strawberry');
