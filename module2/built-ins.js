@@ -326,3 +326,28 @@ myFavoriteFlavors.add('cookies and cream');
 myFavoriteFlavors.add('strawberry');
 myFavoriteFlavors.add('vanilla');
 myFavoriteFlavors.delete('strawberry');
+
+
+
+/**
+ * WeakSets
+ */
+
+ /* 
+ Um WeakSet é como um set normal, mas com algumas diferenças-chave:
+
+um WeakSet só pode conter objetos
+um WeakSet não é um iterable, o que significa que não é possível iterar por seus itens
+um WeakSet não possui o método .clear()
+ */
+
+
+
+const jogo1 = {nome: 'Resident Evil', genero:'Horror', desenvolvedor: 'capcom'};
+const jogo2 = {nome: 'Tomb Raider', genero:'Ação e aventura', desenvolvedor: 'Eidos Montréal,'};
+const jogo3 = {nome: 'God of War 4', genero:'Ação e aventura', desenvolvedor: 'SIE Santa Monica Studio'};
+
+
+const meusJogos = WeakSet([jogo1, jogo2, jogo3]);
+
+console.log(meusJogos);
