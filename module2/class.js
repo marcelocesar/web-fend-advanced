@@ -149,9 +149,7 @@ Quando criamos uma nova instância de uma classe JavaScript, a palavra reservada
   
 */
 
-class Toy {
-    ...
-}
+class Toy { }
 
 const myToy1 = Toy(); // throws an error
 
