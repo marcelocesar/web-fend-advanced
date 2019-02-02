@@ -343,11 +343,54 @@ um WeakSet não possui o método .clear()
 
 
 
-const jogo1 = {nome: 'Resident Evil', genero:'Horror', desenvolvedor: 'capcom'};
-const jogo2 = {nome: 'Tomb Raider', genero:'Ação e aventura', desenvolvedor: 'Eidos Montréal,'};
-const jogo3 = {nome: 'God of War 4', genero:'Ação e aventura', desenvolvedor: 'SIE Santa Monica Studio'};
+let jogo1 = { nome: 'Resident Evil', genero:'Horror', desenvolvedor: 'capcom' };
+let jogo2 = { nome: 'Tomb Raider', genero:'Ação e aventura', desenvolvedor: 'Eidos Montréal,' };
+let jogo3 = { nome: 'God of War 4', genero:'Ação e aventura', desenvolvedor: 'SIE Santa Monica Studio' };
 
 
-const meusJogos = WeakSet([jogo1, jogo2, jogo3]);
+const meusJogos = new WeakSet([jogo1, jogo2, jogo3]);
 
 console.log(meusJogos);
+
+// meusJogos.add('Marcelo'); //TypeError: Invalid value used in weak set
+
+/* 
+
+Garbage collection
+
+No JavaScript, a memória é alocada quando novos valores são criados, e é automaticamente liberada quando esses valores não são necessários. Esse processo de liberação de memória após o desuso é conhecido como garbage collection.
+
+Os WeakSets se aproveitam do garbage collection ao trabalhar exclusivamente com objetos. Se você alterar o valor de um objeto para `null, então estará, basicamente, removendo o objeto. Quando o garbage collector do JavaScript rodar, a memória ocupada por esse objeto anteriormente será liberada para uso posterior em seu programa.
+
+*/
+
+jogo2 = null;
+
+console.log(meusJogos);
+
+
+/*
+ * Programming Quiz: Using Sets (3-2)
+ *
+ * Create the following variables:
+ *     - uniqueFlavors and set it to a new WeakSet object
+ *     - flavor1 and set it equal to `{ flavor: 'chocolate' }`
+ *     - flavor2 and set it equal to an object with property 'flavor' and value of your choice!
+ *
+ * Use the `.add()` method to add the objects `flavor1` and `flavor2` to `uniqueFlavors`
+ * Use the `.add()` method to add the `flavor1` object (again!) to the `uniqueFlavors` set
+ */
+
+
+
+const uniqueFlavors = new WeakSet();
+const flavor1 = { flavor: 'chocolate' };
+const flavor2 = { flavor: 'vanilla' };
+
+uniqueFlavors.add(flavor1);
+uniqueFlavors.add(flavor2);
+uniqueFlavors.add(flavor1);
+
+console.log(uniqueFlavors);
+
+ 
