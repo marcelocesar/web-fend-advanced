@@ -495,7 +495,7 @@ console.log(library);
 // Garbage collection: Quando o garbage collector do JavaScript rodar, a memória ocupada por esse objeto anteriormente será liberada para ser usada posteriormente em seu programa.
 
 
-book1 = null;
+//book1 = null;
 console.log(library);
 
 
@@ -511,34 +511,141 @@ um objeto contendo uma lista de métodos que serão utilizados para tratar o ace
 O segundo objeto é chamado de handler. */
 
 
-var richard = {status: 'looking for work'};
-var agent = new Proxy(richard, {});
+const richard = {status: 'looking for work'};
+const agent = new Proxy(richard, {});
 
-agent.status;
+console.log(agent.status);
+
 
 // get() é utilizada para "interceptar" chamadas a propriedades:
 
-const richard = {status: 'looking for work'};
-const handler = {
+const richard1 = {status: 'looking for work'};
+const handler1 = {
     get(target, propName) {
         console.log(target); // the `richard` object, not `handler` and not `agent`
         console.log(propName); // the name of the property the proxy (`agent` in this case) is checking
     }
 };
-const agent = new Proxy(richard, handler);
-agent.status; // logs out the richard object (not the agent object!) and the name of the property being accessed (`status`)
-
+const agent1 = new Proxy(richard1, handler1);
+console.log(agent1.status); // logs out the richard object (not the agent object!) and the name of the property being accessed (`status`)
 
 // Acessando o objeto-alvo de dentro do proxy
 
-const ricardo = {status: 'looking for work'};
-const handler1 = {
+const richard2 = {status: 'looking for work'};
+const handler2 = {
     get(target, propName) {
         console.log(target);
         console.log(propName);
         return target[propName];
     }
 };
-const agent1 = new Proxy(ricardo, handler1);
-agent1.status; // (1)logs the richard object, (2)logs the property being accessed, (3)returns the text in richard.status
+const agent2 = new Proxy(richard2, handler2);
+console.log(agent2.status) // (1)logs the richard object, (2)logs the property being accessed, (3)returns the text in richard.status
 
+
+// Obtendo a informação de return do proxy diretamente
+
+const richard3 = {status: 'looking for work'};
+const handler3 = {
+    get(target, propName) {
+        return `He's following many leads, so you should offer a contract as soon as possible!`;
+    }
+};
+const agent3 = new Proxy(richard3, handler3);
+console.log(agent3.status) // returns the text `He's following many leads, so you should offer a contract as soon as possible!`
+
+
+/* 
+Com esse código, o proxy nem checará o objeto-alvo, ele apenas interceptará a chamada da propriedade, respondendo diretamente à mensagem de retorno.
+
+Dessa forma, a armadilha get assume o controle sempre que uma propriedade é acessada no proxy. Se quisermos interceptar chamadas para modificar propriedades, então a armadilha set deverá ser utilizada.
+*/
+
+
+/* set() - é utilizada para interceptar o código que modificará uma propriedade. Ela recebe:
+
+- o objeto-alvo do proxy
+- a propriedade que está sendo alterada
+- o novo valor para o proxy
+-------------------------- */
+
+
+const richard4 = {status: 'looking for work'};
+const handler4 = {
+    set(target, propName, value) {
+        if (propName === 'payRate') { // if the pay is being set, take 15% as commission
+            value = value * 0.85;
+        }
+        target[propName] = value;
+    }
+};
+const agent4 = new Proxy(richard4, handler4);
+agent4.payRate = 1000; // set the actor's pay to $1,000
+console.log(agent4.payRate); // $850 the actor's actual pay
+
+
+/* 
+Outras armadilhas
+
+get - permite que o proxy controle chamadas para acesso à propriedades
+set - permite que o proxy controle alterações de valor da propriedade
+apply - permite que o proxy controle quando o objeto-alvo é invocado (o objeto-alvo é uma função)
+has - permite que o proxy controle o uso do operador in
+deleteProperty - permite que o proxy controle quando uma propriedade é deletada
+ownKeys - permite que o proxy controle quando todas as chaves são requisitadas
+construct - permite que o proxy controle quando o proxy é utilizado com a palavra-chave new, como um construtor
+defineProperty - permite que o proxy controle quando defineProperty é utilizado para criar uma nova propriedade no objeto
+getOwnPropertyDescriptor - permite que o proxy controle a recuperação da descrição da propriedade
+preventExtenions - permite que o proxy controle chamadas ao Object.preventExtensions() no objeto proxy
+isExtensible - permite que o proxy controle chamadas ao Object.isExtensible no objeto proxy
+getPrototypeOf - permite que o proxy controle chamadas ao Object.getPrototypeOf no objeto proxy
+setPrototypeOf - permite que o proxy controle chamadas ao Object.setPrototypeOf no objeto proxy
+
+*/
+
+/* Proxies x ES5 getter/setter
+------------------------------- */
+
+var obj = {
+  _age: 5,
+  _height: 4,
+  get age() {
+      console.log(`getting the "age" property`);
+      console.log(this._age);
+  },
+  get height() {
+      console.log(`getting the "height" property`);
+      console.log(this._height);
+  }
+};
+
+/* 
+Observe, no código acima, que temos que configurar get age() e get height() quando inicializamos o objeto. Executando o código, obtemos o seguinte resultado:
+*/
+
+obj.age; // logs 'getting the "age" property' & 5
+obj.height; // logs 'getting the "height" property' & 4
+
+/* 
+Mas veja o que acontece quando adicionamos uma nova propriedade ao objeto:
+*/
+
+obj.weight = 120; // set a new property on the object
+obj.weight; // logs just 120
+
+// Com os proxies da ES6, nós não precisamos saber as propriedades do objeto com antecedência:
+
+const proxyObj = new Proxy({age: 5, height: 4}, {
+  get(targetObj, property) {
+      console.log(`getting the ${property} property`);
+      console.log(targetObj[property]);
+  }
+});
+
+proxyObj.age; // logs 'getting the age property' & 5
+proxyObj.height; // logs 'getting the height property' & 4
+
+// Tudo igual ao código ES5 até aqui, mas veja o que acontece quando adicionamos uma nova propriedade:
+
+proxyObj.weight = 120; // set a new property on the object
+proxyObj.weight; // logs 'getting the weight property' & 120
