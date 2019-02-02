@@ -498,3 +498,47 @@ console.log(library);
 book1 = null;
 console.log(library);
 
+
+
+/**
+ * Proxies
+ */
+
+/* Para criar um objeto proxy, usamos o construtor proxy - new Proxy();. O construtor de proxy recebe dois parâmetros:
+
+o objeto do qual ele será o proxy
+um objeto contendo uma lista de métodos que serão utilizados para tratar o acesso aos dados do primeiro objeto.
+O segundo objeto é chamado de handler. */
+
+
+var richard = {status: 'looking for work'};
+var agent = new Proxy(richard, {});
+
+agent.status;
+
+// get() é utilizada para "interceptar" chamadas a propriedades:
+
+const richard = {status: 'looking for work'};
+const handler = {
+    get(target, propName) {
+        console.log(target); // the `richard` object, not `handler` and not `agent`
+        console.log(propName); // the name of the property the proxy (`agent` in this case) is checking
+    }
+};
+const agent = new Proxy(richard, handler);
+agent.status; // logs out the richard object (not the agent object!) and the name of the property being accessed (`status`)
+
+
+// Acessando o objeto-alvo de dentro do proxy
+
+const ricardo = {status: 'looking for work'};
+const handler1 = {
+    get(target, propName) {
+        console.log(target);
+        console.log(propName);
+        return target[propName];
+    }
+};
+const agent1 = new Proxy(ricardo, handler1);
+agent1.status; // (1)logs the richard object, (2)logs the property being accessed, (3)returns the text in richard.status
+
